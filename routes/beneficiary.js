@@ -1,7 +1,7 @@
 import express from 'express'; 
 import { getBeneficiaries } from '../beneficiary/get.js';
 import { getOneBeneficiary } from '../beneficiary/getOne.js';
-import { createBeneficiaries} from '../beneficiary/create.js';
+import { createBeneficiaries } from '../beneficiary/create.js';
 import { updateBeneficiaries } from '../beneficiary/update.js';
 import { deleteBeneficiaries } from '../beneficiary/delete.js';
 
