@@ -71,9 +71,9 @@ setInterval(() => {
 ========================= */
 
 app.use('/api/banks', banksRoutes);
-app.use('/api/beneficiary', beneficiaryRoutes);
+app.use('/api/beneficiaries', beneficiaryRoutes);
 app.use('/api/settings', settingsRoutes);
-app.use('/api/transfer', transferRoutes);
+app.use('/api/transfers', transferRoutes);
 
 
 /* =========================
