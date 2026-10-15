@@ -14,10 +14,33 @@ dotenv.config();
 const app = express();
 
 /* =========================
+   CORS
+========================= */
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://frontend-ecru-phi-70.vercel.app',
+    ...(process.env.ALLOWED_ORIGINS
+        ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+        : [])
+];
+
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            // Allow requests with no origin (browser address bar, curl, Postman)
+            if (!origin || allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+            return callback(new Error(`CORS blocked for origin: ${origin}`));
+        }
+    })
+);
+
+/* =========================
    Middleware
 ========================= */
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
@@ -34,7 +57,7 @@ export const db = mysql.createPool({
     database: process.env.DB_NAME,
 
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 5,
     queueLimit: 0,
 
     enableKeepAlive: true,
@@ -74,7 +97,6 @@ app.use('/api/banks', banksRoutes);
 app.use('/api/beneficiaries', beneficiaryRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/transfers', transferRoutes);
-
 
 /* =========================
    Health Check
@@ -126,5 +148,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
