@@ -7,7 +7,7 @@ import { updateSettings } from '../settings/update.js';
 const router = express.Router(); 
 
 router.get('/getSettings', getSettings);
-router.get('/updateSettings/:id', updateSettings);
+router.put('/updateSettings/:id', updateSettings);
 
 
 
